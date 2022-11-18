@@ -38,11 +38,11 @@
         <dt class="text-sm font-medium text-gray-500">Apellido</dt>
         <dt class="text-sm font-medium text-gray-500">Teléfono</dt>
       </div>
-      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
-        <dd class="mt-1 text-sm text-gray-900 ">1</dd>
-        <dd class="mt-1 text-sm text-gray-900 ">Backend Developer</dd>
-        <dd class="mt-1 text-sm text-gray-900 ">Backend Developer</dd>
-        <dd class="mt-1 text-sm text-gray-900 ">Backend Developer</dd>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6" *ngFor=" let item of contacts; let i = index">
+        <dd class="mt-1 text-sm text-gray-900 ">{{i + 1}}</dd>
+        <dd class="mt-1 text-sm text-gray-900 ">{{item.nombre}}</dd>
+        <dd class="mt-1 text-sm text-gray-900 ">{{item.apellido}}</dd>
+        <dd class="mt-1 text-sm text-gray-900 ">{{item.telefono}}</dd>
       </div>
     </dl>
   </div>

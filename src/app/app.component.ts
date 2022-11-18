@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ContactsService } from './contacts.service';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +10,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AppComponent {
   title = 'crud-angular';
   formContact: FormGroup;
-  constructor(private readonly fb: FormBuilder) {
+  contacts:Array<any> = [];
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly contactsService: ContactsService
+    ) {
     this.formContact = this.initForm();
   }
-  ngOnInit(): void {
-    // servicio get
+  async ngOnInit(): Promise<void> {
+    const data:any = await this.contactsService.getContact();
+    this.contacts = data.response;
   }
 
   initForm(): FormGroup{
@@ -23,11 +29,11 @@ export class AppComponent {
       telefono: [null, [Validators.required]]
     });
   }
-  onSubmit(data:any){
+  async onSubmit(data:any){
     this.formContact.markAllAsTouched();
     if (!this.formContact.valid) return
-    console.log(data);
-    // servicio post
+    await this.contactsService.createContact(data);
+    this.contacts.push(data);
     this.formContact.reset();
   }
 

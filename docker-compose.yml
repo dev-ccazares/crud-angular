@@ -16,8 +16,8 @@ services:
     container_name: spring
     build:
       dockerfile: Dockerfile
-    expose:
-      - "8080"
+    ports:
+      - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:postgresql://dbc:5433/postgres

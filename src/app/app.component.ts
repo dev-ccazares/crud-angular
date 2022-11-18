@@ -17,9 +17,15 @@ export class AppComponent {
     ) {
     this.formContact = this.initForm();
   }
-  async ngOnInit(): Promise<void> {
-    const data:any = await this.contactsService.getContact();
-    this.contacts = data.response;
+  ngOnInit(): void {
+    this.contactsService.getContact().subscribe(
+      (res:any) => {
+        this.contacts = res.response;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   initForm(): FormGroup{
@@ -29,11 +35,17 @@ export class AppComponent {
       telefono: [null, [Validators.required]]
     });
   }
-  async onSubmit(data:any){
+  onSubmit(data:any){
     this.formContact.markAllAsTouched();
     if (!this.formContact.valid) return
-    await this.contactsService.createContact(data);
-    this.contacts.push(data);
+    this.contactsService.createContact(data).subscribe(
+      (res:any) => {
+        this.contacts.push(res.response);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
     this.formContact.reset();
   }
 

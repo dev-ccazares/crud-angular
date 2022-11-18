@@ -9,13 +9,11 @@ export class ContactsService {
 
     createContact(u: any) {
         return this.http
-            .post(`${this.apiUrl}/person`, u)
-            .toPromise();
+            .post(`${this.apiUrl}/person`, u);
     }
 
     getContact() {
         return this.http
-            .get(`${this.apiUrl}/person/all`)
-            .toPromise();
+            .get(`${this.apiUrl}/person/all`);
     }
 }

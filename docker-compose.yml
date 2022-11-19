@@ -1,32 +1,16 @@
 services:
-  dbc:
-    image: postgres:12
-    container_name: dbc
-    restart: always
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
-    volumes:
-      - db-data:/var/lib/postgresql/data
   spring:
-    image: 'ftacurip/spring-person:0.8'
+    image: 'ftacurip/spring-person:0.13'
     container_name: spring
-    build:
-      dockerfile: Dockerfile
-    expose:
-      - "8080"
+    ports:
+      - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://dbc:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ups.postgres.database.azure.com:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-    depends_on:
-      - dbc
-  angular:
-    image: 'devcorpecu/crud-angular:0.2'
+      - SPRING_DATASOURCE_PASSWORD=tacuriU.2022
+angular:
+    image: 'devcorpecu/crud-angular:0.1'
     container_name: docker-angular
     build:
       dockerfile: Dockerfile
@@ -34,5 +18,3 @@ services:
       - "80:80"
     depends_on:
       - spring
-volumes:
-  db-data:

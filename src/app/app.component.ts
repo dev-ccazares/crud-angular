@@ -18,9 +18,12 @@ export class AppComponent {
     this.formContact = this.initForm();
   }
   ngOnInit(): void {
+    this.getAll();
+  }
+  getAll(){
     this.contactsService.getContact().subscribe(
       (res:any) => {
-        this.contacts = res.response;
+        this.contacts = res;
       },
       (err) => {
         console.log(err);
@@ -30,6 +33,7 @@ export class AppComponent {
 
   initForm(): FormGroup{
     return this.fb.group({
+      id: [null],
       nombre: [null, [Validators.required]],
       apellido: [null, [Validators.required]],
       telefono: [null, [Validators.required]]
@@ -38,16 +42,53 @@ export class AppComponent {
   onSubmit(data:any){
     this.formContact.markAllAsTouched();
     if (!this.formContact.valid) return
+    if(!this.formContact.get('id')?.value){
+      this.onCreate(data);
+    }else{
+      this.onEdit(data);
+    }
+    this.formContact.reset();
+  }
+  onCreate(data:any){
     this.contactsService.createContact(data).subscribe(
       (res:any) => {
-        this.contacts.push(res.response);
+        this.contacts.push(res);
       },
       (err) => {
         console.log(err);
       }
     );
+  }
+
+  onEdit(data:any){
+    this.contactsService.updateContact(data).subscribe(
+      (res:any) => {
+        const i = this.contacts.findIndex(x=> x.id === data.id)
+        this.contacts[i] = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  cancel(){
     this.formContact.reset();
   }
 
+  edit(id:number){
+    const contact = this.contacts.find(x=>x.id === id);
+    this.formContact.setValue(contact);
+  }
+
+  delete(id:number){
+    this.contactsService.deleteContact(id).subscribe(
+      () => {
+        this.getAll();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 
 }

@@ -25,24 +25,30 @@
           >
         </div>  
         <div class="col-span-3 sm:col-span-3">
-          <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Guardar</button>
+          <button type="submit" class="inline-flex justify-center  border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{{!formContact.get('id')?.value ? 'Guardar' : 'Editar'}}</button>
+          <button (click)="cancel()" type="button" class="inline-flex justify-center  border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Cancelar</button>
         </div>  
       </div>
       <span class="text-red-600 text-xs" *ngIf="!formContact.valid && (formContact.dirty || formContact.touched)">*Llene todos los campos</span>
     </form>
   <div class="border-t border-gray-200">
     <dl>
-      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6">
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-5 sm:px-6">
         <dt class="text-sm font-medium text-gray-500">Id</dt>
         <dt class="text-sm font-medium text-gray-500">Nombre</dt>
         <dt class="text-sm font-medium text-gray-500">Apellido</dt>
         <dt class="text-sm font-medium text-gray-500">Teléfono</dt>
+        <dt class="text-sm font-medium text-gray-500">Acciones</dt>
       </div>
-      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6" *ngFor=" let item of contacts; let i = index">
-        <dd class="mt-1 text-sm text-gray-900 ">{{i + 1}}</dd>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-5 sm:gap-5 sm:px-6" *ngFor=" let item of contacts; let i = index">
+        <dd class="mt-1 text-sm text-gray-900 ">{{item.id}}</dd>
         <dd class="mt-1 text-sm text-gray-900 ">{{item.nombre}}</dd>
         <dd class="mt-1 text-sm text-gray-900 ">{{item.apellido}}</dd>
         <dd class="mt-1 text-sm text-gray-900 ">{{item.telefono}}</dd>
+        <dd class="mt-1 text-sm text-gray-900 ">
+          <button (click)="edit(item.id)" type="button" class="inline-flex justify-center  border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Editar</button>
+          <button (click)="delete(item.id)" type="button" class="inline-flex justify-center border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Eliminar</button>
+        </dd>
       </div>
     </dl>
   </div>

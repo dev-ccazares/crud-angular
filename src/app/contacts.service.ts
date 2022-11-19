@@ -12,8 +12,18 @@ export class ContactsService {
             .post(`${this.apiUrl}/person`, u);
     }
 
+    updateContact(u: any) {
+        return this.http
+            .put(`${this.apiUrl}/person`, u);
+    }
+
     getContact() {
         return this.http
             .get(`${this.apiUrl}/person/all`);
+    }
+
+    deleteContact(u: any) {
+        return this.http
+            .delete(`${this.apiUrl}/person/${u}`);
     }
 }

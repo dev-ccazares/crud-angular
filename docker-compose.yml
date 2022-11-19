@@ -2,18 +2,16 @@ services:
   spring:
     image: 'ftacurip/spring-person:0.13'
     container_name: spring
-    ports:
-      - "8080:8080"
+    expose:
+      - "8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ups.postgres.database.azure.com:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=tacuriU.2022
-angular:
-    image: 'devcorpecu/crud-angular:0.1'
+  angular:
+    image: 'devcorpecu/crud-angular:0.3'
     container_name: docker-angular
-    build:
-      dockerfile: Dockerfile
     ports:
       - "80:80"
     depends_on:
